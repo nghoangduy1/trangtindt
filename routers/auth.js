@@ -85,4 +85,27 @@ router.get('/admin', async (req, res) => {
 	});
 });
 
+// POST: Cập nhật hồ sơ cá nhân
+router.post('/hoso', async (req, res) => {
+	if (!req.session || !req.session.MaNguoiDung) {
+		return res.redirect('/dangnhap');
+	}
+
+	const id = req.session.MaNguoiDung;
+	const { HoVaTen, Email, HinhAnh } = req.body;
+
+	try {
+		await TaiKhoan.findByIdAndUpdate(id, {
+			HoVaTen,
+			Email,
+			HinhAnh
+		});
+		// Cập nhật lại session nếu cần
+		req.session.HoVaTen = HoVaTen;
+
+		res.redirect('/taikhoan/hoso');
+	} catch (err) {
+		res.send("Lỗi: " + err.message);
+	}
+});
 module.exports = router;

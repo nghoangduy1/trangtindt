@@ -10,7 +10,7 @@ var chudeRouter = require('./routers/chude');
 var taikhoanRouter = require('./routers/taikhoan');
 var baivietRouter = require('./routers/baiviet');
 
-var uri = 'mongodb+srv://admin:admin123@cluster0.gp86p.mongodb.net/trangtin';
+var uri = 'mongodb+srv://admin:admin123@cluster0.gp86p.mongodb.net/trangtindt';
 mongoose.connect(uri).catch(err => console.log(err));
 
 app.set('views', './views');
@@ -18,6 +18,7 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/', express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 app.use(session({
 	name: 'iNews',						// Tên session (tự chọn)

@@ -67,5 +67,24 @@ router.get('/xoa/:id', async (req, res) => {
 	await TaiKhoan.findByIdAndDelete(id);
 	res.redirect('/taikhoan');
 });
+// GET: Hồ sơ cá nhân
+router.get('/hoso', async (req, res) => {
+	if (!req.session || !req.session.MaNguoiDung) {
+		return res.redirect('/dangnhap');
+	}
+
+	const id = req.session.MaNguoiDung;
+	try {
+		const nguoidung = await TaiKhoan.findById(id);
+		if (!nguoidung) return res.send("Không tìm thấy người dùng");
+
+		res.render('taikhoan_hoso', {
+			title: 'Hồ sơ cá nhân',
+			taikhoan: nguoidung
+		});
+	} catch (err) {
+		res.send("Lỗi: " + err.message);
+	}
+});
 
 module.exports = router;

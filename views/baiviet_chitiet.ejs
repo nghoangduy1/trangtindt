@@ -1,122 +1,345 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="Trang tin điện tử nhiều người xem nhất vũ trụ." />
-	<meta name="author" content="Nguyễn Hoàng Tùng" />
-	<title><%= (typeof baiviet !== "undefined") ? baiviet.TieuDe : 'N/A' %> - Trang tin điện tử</title>
+	<meta name="author" content="Nguyễn Hoàng Duy" />
+	<title>
+		<%= (typeof baiviet !=="undefined" ) ? baiviet.TieuDe : 'N/A' %> - Trang tin điện tử
+	</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<style>
+		body {
+			font-family: 'Roboto', 'Arial', sans-serif;
+			font-size: 15px;
+			line-height: 1.6;
+			color: #222;
+			background-color: #f5f5f5;
+		}
+
+		.navbar {
+			border-bottom: 1px solid #ddd;
+			box-shadow: none;
+			padding: 10px 0;
+			background-color: #fff;
+		}
+
+		.navbar-brand {
+			font-size: 24px;
+			font-weight: bold;
+			color: #c10000 !important;
+		}
+
+		.nav-link {
+			color: #222;
+			font-weight: 500;
+		}
+
+		.nav-link:hover {
+			color: #c10000;
+		}
+
+		.card {
+			border: none;
+			background-color: #fff;
+			margin-bottom: 30px;
+			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+		}
+
+		.card-img {
+			width: 100%;
+			height: auto;
+			object-fit: cover;
+		}
+
+		.card-title {
+			font-size: 18px;
+			font-weight: 600;
+			color: #222;
+		}
+
+		.card-meta {
+			font-size: 13px;
+			color: #888;
+			margin-bottom: 5px;
+		}
+
+		.card-text {
+			font-size: 14px;
+			color: #444;
+		}
+
+		.btn-secondary {
+			background-color: #c10000;
+			border: none;
+			color: #fff;
+		}
+
+		.site-footer {
+			background-color: #222;
+			color: #aaa;
+			padding: 20px 0;
+			font-size: 14px;
+		}
+
+		.site-footer a {
+			color: #ccc;
+		}
+
+		.site-footer a:hover {
+			color: #fff;
+		}
+
+		.pagination .page-link {
+			color: #c10000;
+			border: 1px solid #ddd;
+		}
+
+		.pagination .page-item.active .page-link,
+		.pagination .page-link:hover {
+			background-color: #c10000;
+			border-color: #c10000;
+			color: #fff;
+		}
+
+		.chuyenmuc-bar {
+			background-color: #fff;
+			border-top: 1px solid #eee;
+			border-bottom: 1px solid #eee;
+			padding: 8px 0;
+			margin-bottom: 20px;
+		}
+
+		.chuyenmuc-nav {
+			list-style: none;
+			display: flex;
+			flex-wrap: nowrap;
+			overflow-x: auto;
+			margin: 0;
+			padding: 0 15px;
+		}
+
+		.chuyenmuc-nav li {
+			margin-right: 20px;
+			white-space: nowrap;
+		}
+
+		.chuyenmuc-nav a {
+			text-decoration: none;
+			color: #000;
+			font-weight: 500;
+			font-size: 15px;
+		}
+
+		.chuyenmuc-nav a:hover {
+			color: #c10000;
+		}
+
+		.chuyenmuc-nav i {
+			font-size: 18px;
+			margin-right: 5px;
+		}
+			#weather {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  transform: perspective(600px) rotateY(10deg);
+  z-index: 10;
+}
+
+#weather i {
+  font-size: 24px;
+  margin-right: 10px;
+  color: #c10000;
+}
+
+#weather:hover {
+  transform: perspective(600px) rotateY(0deg) scale(1.05);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+  background-color: #f5f5f5;
+}
+
+#weather .weather-info {
+  display: flex;
+  flex-direction: column;
+}
+
+#weather .temperature {
+  font-size: 20px;
+  font-weight: 700;
+  color: #c10000;
+}
+
+#weather .description {
+  font-size: 14px;
+  color: #888;
+}
+
+@media (max-width: 767px) {
+  #weather {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  #weather .temperature {
+    font-size: 18px;
+  }
+
+  #weather .description {
+    font-size: 12px;
+  }
+}
+	</style>
 	<link href="https://trangtin-7xcj.onrender.com/css/app.css" rel="stylesheet" />
 </head>
+
 <body>
 	<header>
 		<nav class="navbar navbar-expand-md navbar-light bg-white absolute-top">
 			<div class="container">
-				<button class="navbar-toggler order-2 order-md-1" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbar-left navbar-right" aria-expanded="false" aria-label="Toggle navigation">
+				<button class="navbar-toggler order-2 order-md-1" type="button" data-bs-toggle="collapse"
+					data-bs-target=".navbar-collapse" aria-controls="navbar-left navbar-right" aria-expanded="false"
+					aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse order-3 order-md-2" id="navbar-left">
 					<ul class="navbar-nav me-auto">
-						<li class="nav-item dropdown active">
-							<a class="nav-link dropdown-toggle" href="#" id="chuyenmuc" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Chuyên mục</a>
-							<div class="dropdown-menu" aria-labelledby="chuyenmuc">
-								<% if(typeof chuyenmuc !== "undefined") { chuyenmuc.forEach(cd => { %>
-									<a class="dropdown-item" href="/baiviet/chude/<%= cd._id %>"><%= cd.TenChuDe %></a>
-								<% }); } %>
-							</div>
-						</li>
 					</ul>
 				</div>
-				<a class="navbar-brand mx-auto order-1 order-md-3" href="/">iNews</a>
+				<a class="navbar-brand mx-auto order-1 order-md-3" href="/">News</a>
 				<div class="collapse navbar-collapse order-4 order-md-4" id="navbar-right">
 					<ul class="navbar-nav ms-auto">
-						<% if(typeof session === "undefined" || !session.MaNguoiDung) { %>
+						<li class="nav-item">
+							<span id="weather" class="nav-link">Loading Weather...</span> <!-- Thêm phần thời tiết vào đây -->
+							<script src="/js/weather.js"></script>
+							<script>
+								fetchWeather();
+							</script>
+						</li>
+						<% if(typeof session==="undefined" || !session.MaNguoiDung) { %>
 							<li class="nav-item">
 								<a class="nav-link" href="/dangky">Đăng ký</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="/dangnhap">Đăng nhập</a>
 							</li>
-						<% } else { %>
-							<li class="nav-item">
-								<a class="nav-link" href="/admin">Quản lý</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="/dangxuat">Đăng xuất</a>
-							</li>
-						<% } %>
+							<% } else { %>
+								<li class="nav-item">
+									<a class="nav-link" href="/admin">Quản lý</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/dangxuat">Đăng xuất</a>
+								</li>
+								<% } %>
 					</ul>
 					<form class="form-inline" role="search" action="/timkiem" method="post">
-						<input name="tukhoa" class="search js-search form-control form-control-rounded me-sm-2" type="text" title="Bạn muốn tìm gì?" placeholder="Tìm kiếm..." aria-label="Search" />
+						<input name="tukhoa" class="search js-search form-control form-control-rounded me-sm-2" type="text"
+							title="Bạn muốn tìm gì?" placeholder="Tìm kiếm..." aria-label="Search" />
 					</form>
 				</div>
 			</div>
 		</nav>
 	</header>
+	<div class="chuyenmuc-bar">
+		<ul class="chuyenmuc-nav container">
+			<li><a href="/"><i class="fa fa-home"></i>Trang chủ</a></li>
+			<% if(typeof chuyenmuc !=="undefined" ) { chuyenmuc.forEach(cd=> { %>
+				<li><a href="/baiviet/chude/<%= cd._id %>">
+						<%= cd.TenChuDe %>
+					</a></li>
+				<% }); } %>
+		</ul>
+	</div>
 	<main class="main pt-4">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-9">
-				<% if(typeof baiviet !== "undefined") { %>
-                    <article class="card mb-4">
-                        <header class="card-header text-center">
-                            <div class="card-meta">
-                                <a href="#"><time class="timeago" datetime="<%= baiviet.NgayDang %>"></time></a> thuộc <a href="/baiviet/chude/<%= baiviet.ChuDe._id %>"><%= baiviet.ChuDe.TenChuDe %></a> Luot xem <%=baiviet.LuotXem%>
-                            </div>
-                            <a href="post-image.html">
-                                <h3 class="card-title"><%= baiviet.TieuDe %></h3>
-                            </a>
-                        </header>
-                        <div class="card-body">
-                            <p style="text-align:justify;"><strong><%= baiviet.TomTat %></strong></p>
-							<%- baiviet.NoiDung %>
-							
-							<hr />
-                            <h3>2 bình luận</h3>
-                            <div class="d-flex mb-3 p-3 bg-light">
-                                <div class="text-center">
-                                    <img class="me-3 rounded-circle" src="https://trangtin-7xcj.onrender.comimages/avatars/1.png" width="100" height="100" />
-                                    <h6 class="mt-1 mb-0 me-3">Kim</h6>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <p class="mt-3 mb-2">Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem thuộc justo pellentesque facilisis.</p>
-                                    <time class="timeago text-muted" datetime="2021-09-20 20:00">20 november 2021</time>
-                                </div>
-                            </div>
-                            <div class="d-flex mb-3 p-3 bg-light">
-                                <div class="text-center">
-                                    <img class="me-3 rounded-circle" src="https://trangtin-7xcj.onrender.comimages/avatars/2.png" width="100" height="100" />
-                                    <h6 class="mt-1 mb-0 me-3">Paula</h6>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <p class="mt-3 mb-2">Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus.</p>
-                                    <time class="timeago text-muted" datetime="2021-09-05 20:00">5 november 2021</time>
-                                </div>
-                            </div>
-                            <div class="mt-5">
-                                <h5>Write a response</h5>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Your name">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Your email">
-                                    </div>
-                                </div>
-                                <textarea class="form-control mt-3" rows="3" placeholder="Write a response.."></textarea>
-                                <a href="#" class="btn btn-success mt-3">Publish</a>
-                            </div>
-                        </div>
-                    </article>
-				<% } %>
-                </div>
+					<% if(typeof baiviet !=="undefined" ) { %>
+						<article class="card mb-4">
+							<header class="card-header text-center">
+								<div class="card-meta">
+									<a href="#"><time class="timeago" datetime="<%= baiviet.NgayDang %>"></time></a> thuộc <a
+										href="/baiviet/chude/<%= baiviet.ChuDe._id %>">
+										<%= baiviet.ChuDe.TenChuDe %>
+									</a> Luot xem <%=baiviet.LuotXem%>
+								</div>
+								<a href="post-image.html">
+									<h3 class="card-title">
+										<%= baiviet.TieuDe %>
+									</h3>
+								</a>
+							</header>
+							<div class="card-body">
+								<p style="text-align:justify;"><strong>
+										<%= baiviet.TomTat %>
+									</strong></p>
+								<%- baiviet.NoiDung %>
+									
+									<hr />
+									<h3>2 bình luận</h3>
+									<div class="d-flex mb-3 p-3 bg-light">
+										<div class="text-center">
+											<img class="me-3 rounded-circle" src="https://trangtin-7xcj.onrender.com/images/avatars/1.png"
+												width="100" height="100" />
+											<h6 class="mt-1 mb-0 me-3">Kim</h6>
+										</div>
+										<div class="flex-grow-1">
+											<p class="mt-3 mb-2">Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl
+												sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede.
+												Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem thuộc justo pellentesque facilisis.
+											</p>
+											<time class="timeago text-muted" datetime="2021-09-20 20:00">20 november 2021</time>
+										</div>
+									</div>
+									<div class="d-flex mb-3 p-3 bg-light">
+										<div class="text-center">
+											<img class="me-3 rounded-circle" src="https://trangtin-7xcj.onrender.com/images/avatars/2.png"
+												width="100" height="100" />
+											<h6 class="mt-1 mb-0 me-3">Paula</h6>
+										</div>
+										<div class="flex-grow-1">
+											<p class="mt-3 mb-2">Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec,
+												imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a,
+												consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum
+												nunc. Nunc nonummy metus.</p>
+											<time class="timeago text-muted" datetime="2021-09-05 20:00">5 november 2021</time>
+										</div>
+									</div>
+									<div class="mt-5">
+										<h5>Write a response</h5>
+										<div class="row">
+											<div class="col-md-6">
+												<input type="text" class="form-control" id="name" name="name" placeholder="Your name">
+											</div>
+											<div class="col-md-6">
+												<input type="email" class="form-control" id="email" name="email" placeholder="Your email">
+											</div>
+										</div>
+										<textarea class="form-control mt-3" rows="3" placeholder="Write a response.."></textarea>
+										<a href="#" class="btn btn-success mt-3">Publish</a>
+									</div>
+							</div>
+						</article>
+						<% } %>
+				</div>
 				<div class="col-md-3 ms-auto">
 					<aside class="sidebar">
 						<div class="card mb-4">
 							<div class="card-body">
 								<h4 class="card-title">Giới thiệu</h4>
-								<p class="card-text">Đọc tin tức trên trang web này sẽ giúp bạn có cái nhìn khách quan về cuộc sống. Đừng quên chia sẻ trang này cho toàn bộ vũ trụ biết nhé. Mến yêu.</p>
+								<p class="card-text">Đọc tin tức trên trang web này sẽ giúp bạn có cái nhìn khách quan về cuộc sống.
+									Đừng quên chia sẻ trang này cho toàn bộ vũ trụ biết nhé. Mến yêu.</p>
 							</div>
 						</div>
 					</aside>
@@ -124,21 +347,25 @@
 						<div class="card mb-4">
 							<div class="card-body">
 								<h4 class="card-title">Thẻ</h4>
-								<% if(typeof chuyenmuc !== "undefined") { chuyenmuc.forEach(cd => { %>
-									<a class="btn btn-light btn-sm mb-1" href="/baiviet/chude/<%= cd._id %>"><%= cd.TenChuDe %></a>
-								<% }); } %>
+								<% if(typeof chuyenmuc !=="undefined" ) { chuyenmuc.forEach(cd=> { %>
+									<a class="btn btn-light btn-sm mb-1" href="/baiviet/chude/<%= cd._id %>">
+										<%= cd.TenChuDe %>
+									</a>
+									<% }); } %>
 							</div>
 						</div>
 						<div class="card mb-4">
 							<div class="card-body">
 								<h4 class="card-title">Xem nhiều nhất</h4>
-								<% if(typeof xemnhieunhat !== "undefined") { xemnhieunhat.forEach(bv => { %>
+								<% if(typeof xemnhieunhat !=="undefined" ) { xemnhieunhat.forEach(bv=> { %>
 									<a href="/baiviet/chitiet/<%= bv._id %>" class="d-inline-block mt-3">
-										<h4 class="h6"><%= bv.TieuDe %></h4>
+										<h4 class="h6">
+											<%= bv.TieuDe %>
+										</h4>
 										<img class="card-img" src="<%- firstImage(bv.NoiDung) %>" alt="" />
 									</a>
 									<time class="timeago" datetime="<%= bv.NgayDang %>"></time> thuộc <%= bv.ChuDe.TenChuDe %>
-								<% }); } %>
+										<% }); } %>
 							</div>
 						</div>
 					</aside>
@@ -173,18 +400,26 @@
 		<div class="row g-0">
 			<div class="col-sm-6">
 				<div class="row g-0">
-					<div class="col-3"><a class="photo" href="#"><img class="img-fluid" src="https://trangtin-7xcj.onrender.comimages/instagram/1.jpg" alt="" /></a></div>
-					<div class="col-3"><a class="photo" href="#"><img class="img-fluid" src="https://trangtin-7xcj.onrender.comimages/instagram/2.jpg" alt="" /></a></div>
-					<div class="col-3"><a class="photo" href="#"><img class="img-fluid" src="https://trangtin-7xcj.onrender.comimages/instagram/3.jpg" alt="" /></a></div>
-					<div class="col-3"><a class="photo" href="#"><img class="img-fluid" src="https://trangtin-7xcj.onrender.comimages/instagram/4.jpg" alt="" /></a></div>
+					<div class="col-3"><a class="photo" href="#"><img class="img-fluid"
+								src="https://trangtin-7xcj.onrender.com/images/instagram/1.jpg" alt="" /></a></div>
+					<div class="col-3"><a class="photo" href="#"><img class="img-fluid"
+								src="https://trangtin-7xcj.onrender.com/images/instagram/2.jpg" alt="" /></a></div>
+					<div class="col-3"><a class="photo" href="#"><img class="img-fluid"
+								src="https://trangtin-7xcj.onrender.com/images/instagram/3.jpg" alt="" /></a></div>
+					<div class="col-3"><a class="photo" href="#"><img class="img-fluid"
+								src="https://trangtin-7xcj.onrender.com/images/instagram/4.jpg" alt="" /></a></div>
 				</div>
 			</div>
 			<div class="col-sm-6">
 				<div class="row g-0">
-					<div class="col-3"><a class="photo" href="#"><img class="img-fluid" src="https://trangtin-7xcj.onrender.comimages/instagram/5.jpg" alt="" /></a></div>
-					<div class="col-3"><a class="photo" href="#"><img class="img-fluid" src="https://trangtin-7xcj.onrender.comimages/instagram/6.jpg" alt="" /></a></div>
-					<div class="col-3"><a class="photo" href="#"><img class="img-fluid" src="https://trangtin-7xcj.onrender.comimages/instagram/7.jpg" alt="" /></a></div>
-					<div class="col-3"><a class="photo" href="#"><img class="img-fluid" src="https://trangtin-7xcj.onrender.comimages/instagram/8.jpg" alt="" /></a></div>
+					<div class="col-3"><a class="photo" href="#"><img class="img-fluid"
+								src="https://trangtin-7xcj.onrender.com/images/instagram/5.jpg" alt="" /></a></div>
+					<div class="col-3"><a class="photo" href="#"><img class="img-fluid"
+								src="https://trangtin-7xcj.onrender.com/images/instagram/6.jpg" alt="" /></a></div>
+					<div class="col-3"><a class="photo" href="#"><img class="img-fluid"
+								src="https://trangtin-7xcj.onrender.com/images/instagram/7.jpg" alt="" /></a></div>
+					<div class="col-3"><a class="photo" href="#"><img class="img-fluid"
+								src="https://trangtin-7xcj.onrender.com/images/instagram/8.jpg" alt="" /></a></div>
 				</div>
 			</div>
 		</div>
@@ -198,10 +433,11 @@
 				<li class="nav-item"><a class="nav-link" href="#">Liên hệ</a></li>
 			</ul>
 			<div class="copy">
-				Bản quyền &copy; 2025 bởi Tên của bạn.
+				Bản quyền &copy; 2025 bởi Nguyễn Hoàng Duy.
 			</div>
 		</div>
 	</footer>
 	<script src="https://trangtin-7xcj.onrender.comjs/app.js"></script>
 </body>
+
 </html>

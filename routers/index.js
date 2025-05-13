@@ -3,6 +3,7 @@ var router = express.Router();
 var firstImage = require('../modules/firstimage');
 var ChuDe = require('../models/chude');
 var BaiViet = require('../models/baiviet');
+var striptags = require('striptags');
 
 // GET: Trang chủ
 router.get('/', async (req, res) => {
@@ -12,7 +13,7 @@ router.get('/', async (req, res) => {
         .sort({ NgayDang: -1 })
         .populate('ChuDe')
         .populate('TaiKhoan')
-        .limit(12).exec();
+        .exec();
 
     var xnn = await BaiViet.find({ KiemDuyet: 1 })
         .sort({ LuotXem: -1 })
@@ -40,7 +41,7 @@ router.get('/baiviet/chude/:id', async (req, res) => {
         .sort({ NgayDang: -1 })
         .populate('ChuDe')
         .populate('TaiKhoan')
-        .limit(8).exec();
+        .exec();
 
     // Lấy 3 bài viết xem nhiều nhất hiển thị vào cột phải
     var xnn = await BaiViet.find({ KiemDuyet: 1, ChuDe: id })
@@ -102,16 +103,58 @@ router.get('/tinmoi', async (req, res) => {
 
 // POST: Kết quả tìm kiếm
 router.post('/timkiem', async (req, res) => {
-	var tukhoa = req.body.tukhoa;
-	
-	// Xử lý tìm kiếm bài viết
-	var bv = [];
-	
-	res.render('timkiem', {
-		title: 'Kết quả tìm kiếm',
-		baiviet: bv,
-		tukhoa: tukhoa
-	});
+  var tukhoa = req.body.tukhoa;
+
+  if (!tukhoa) {
+    const cm = await ChuDe.find();
+    return res.render('timkiem', {
+      title: 'Kết quả tìm kiếm',
+      baiviet: [],
+      tukhoa: 'Vui lòng nhập từ khóa tìm kiếm.',
+      chuyenmuc: cm,
+      firstImage: require('../modules/firstimage') // ✅ thêm dòng này
+    });
+  }
+
+  try {
+    const cm = await ChuDe.find();
+    const bv = await BaiViet.find({
+      KiemDuyet: 1,
+      $or: [
+        { TieuDe: { $regex: tukhoa, $options: 'i' } },
+        { NoiDung: { $regex: tukhoa, $options: 'i' } }
+      ]
+    })
+      .sort({ NgayDang: -1 })
+      .populate('ChuDe')
+      .populate('TaiKhoan')
+      .exec();
+
+    const cleanContent = bv.map(bai => {
+      return {
+        ...bai._doc,
+        MoTa: striptags(bai.NoiDung).substring(0, 150)
+      };
+    });
+
+    res.render('timkiem', {
+      title: 'Kết quả tìm kiếm',
+      baiviet: cleanContent,
+      tukhoa: tukhoa,
+      chuyenmuc: cm,
+      firstImage: require('../modules/firstimage') // ✅ thêm dòng này
+    });
+
+  } catch (error) {
+    const cm = await ChuDe.find();
+    res.render('timkiem', {
+      title: 'Kết quả tìm kiếm',
+      baiviet: [],
+      tukhoa: 'Có lỗi xảy ra khi tìm kiếm.',
+      chuyenmuc: cm,
+      firstImage: require('../modules/firstimage') // ✅ thêm dòng này
+    });
+  }
 });
 
 // GET: Lỗi
@@ -126,6 +169,19 @@ router.get('/success', async (req, res) => {
 	res.render('success', {
 		title: 'Hoàn thành'
 	});
+});
+
+//Thời tiết
+router.get('/weather', async function(req, res) {
+  const chuyenmuc = await ChuDe.find();
+  const xemnhieunhat = await BaiViet.find({ KiemDuyet: 1 }).sort({ LuotXem: -1 }).limit(3).populate('ChuDe').exec();
+
+  res.render('weather', {
+    title: 'Thời tiết',
+    chuyenmuc: chuyenmuc,
+    xemnhieunhat: xemnhieunhat,
+    firstImage: firstImage
+  });
 });
 
 module.exports = router;

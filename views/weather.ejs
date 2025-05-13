@@ -117,6 +117,35 @@
 		font-size: 18px;
 		margin-right: 5px;
 	}
+	#weatherChartHour,
+#weatherChartDay {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Đảm bảo biểu đồ có khoảng cách hợp lý với các phần khác */
+.main .container {
+    padding: 15px;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Tùy chỉnh padding và margin cho các phần tiêu đề biểu đồ */
+.main h2 + canvas {
+    margin-top: 20px;
+}
+
+/* Thêm khoảng cách cho các section để không bị chồng chéo */
+.main {
+    padding-bottom: 50px;
+}
 	</style>
 	<link href="https://trangtin-7xcj.onrender.com/css/app.css" rel="stylesheet" />
 </head>
@@ -167,97 +196,18 @@
 		</ul>
 	</div>
 	<main class="main pt-4">
+		
 		<div class="container">
 			<div class="row">
 				<div class="col-md-9">
 					<div class="text-center">
-						<h3>Kết quả tìm kiếm: <%= tukhoa %></h3>
-					
-					<% if (baiviet && baiviet.length > 0) { %>
-						<% baiviet.forEach(function(bv) { %>
-							<article class="card mb-4">
-								<a href="/baiviet/chitiet/<%= bv._id %>">
-									<img class="card-img" src="<%- firstImage(bv.NoiDung) %>" alt="" />
-								</a>
-								<div class="card-body px-0">
-									<h4 class="card-title">
-										<a href="/baiviet/chitiet/<%= bv._id %>"><%= bv.TieuDe %></a>
-									</h4>
-									<p class="card-text"><%= bv.MoTa %>...</p>
-								</div>
-							</article>
-						<% }); %>
-						<% } else { %>
-							<p>Không tìm thấy bài viết nào với từ khóa "<%= tukhoa %>".</p>
-					
-							<!-- Hiển thị bài viết mẫu khi KHÔNG có kết quả -->
-							<article class="card mb-4">
-								<header class="card-header px-0">
-									<div class="card-meta">
-										<a href="#"><time class="timeago" datetime="2021-09-26 20:00"></time></a> thuộc <a href="page-category.html">Journey</a>
-									</div>
-									<a href="post-image.html">
-										<h4 class="card-title">How can we sing about love?</h4>
-									</a>
-								</header>
-								<div class="card-body px-0 pt-0">
-									<p class="card-text">Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. </p>
-								</div>
-							</article>
-					
-							<article class="card mb-4">
-								<header class="card-header px-0">
-									<div class="card-meta">
-										<a href="#"><time class="timeago" datetime="2021-09-03 20:00"></time></a> thuộc <a href="page-category.html">Lifestyle</a>
-									</div>
-									<a href="post-image.html">
-										<h4 class="card-title">Oh, I guess they have the blues</h4>
-									</a>
-								</header>
-								<div class="card-body px-0 pt-0">
-									<p class="card-text">Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. </p>
-								</div>
-							</article>
-					
-							<article class="card mb-4">
-								<header class="card-header px-0">
-									<div class="card-meta">
-										<a href="#"><time class="timeago" datetime="2021-07-16 20:00"></time></a> thuộc <a href="page-category.html">Work</a>
-									</div>
-									<a href="post-image.html">
-										<h4 class="card-title">How can we, how can we sing about ourselves?</h4>
-									</a>
-								</header>
-								<div class="card-body px-0 pt-0">
-									<p class="card-text">Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. </p>
-								</div>
-							</article>
-					
-							<article class="card mb-4">
-								<header class="card-header px-0">
-									<div class="card-meta">
-										<a href="#"><time class="timeago" datetime="2021-09-15 20:00"></time></a> thuộc <a href="page-category.html">Lifestyle</a>
-									</div>
-									<a href="post-image.html">
-										<h4 class="card-title">The king is made of paper</h4>
-									</a>
-								</header>
-								<div class="card-body px-0 pt-0">
-									<p class="card-text">Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. </p>
-								</div>
-							</article>
-					
-							<div class="alert alert-primary" role="alert">
-								<h4 class="alert-heading">Rất tiếc!</h4>
-								<p>Không có bài viết nào trong chuyên mục này.</p>
-								<hr>
-								<div class="btn-list">
-									<a class="btn btn-primary" type="button" href="/">Về trang chủ</a>
-								</div>
-							</div>
-						<% } %>
-					
 						<hr />
+						<div class="container text-center">
+			<h2>Biểu đồ nhiệt độ theo giờ hôm nay</h2>
+			<canvas id="weatherChartHour" width="600" height="300"></canvas>
+			<h2 class="text-center mt-5">Biểu đồ nhiệt độ trung bình 5 ngày</h2>
+			<canvas id="weatherChartDay" width="600" height="300"></canvas>
+		</div>
 					</div>
                 </div>
 				<div class="col-md-3 ms-auto">
@@ -351,6 +301,9 @@
 			</div>
 		</div>
 	</footer>
+	<!-- Nhúng Chart.js và JS vẽ biểu đồ -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="/js/weather-chart.js"></script>
 	<script src="https://trangtin-7xcj.onrender.com/js/app.js"></script>
 </body>
 </html>
