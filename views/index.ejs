@@ -119,62 +119,110 @@
 			font-size: 18px;
 			margin-right: 5px;
 		}
-		#weather {
+.navbar {
+  background-color: #fff;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.navbar .container {
   display: flex;
   align-items: center;
-  background-color: #fff;
-  padding: 10px 20px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 15px 30px;
+  background: linear-gradient(to right, #ffffff, #f9f9f9);
+  border: 1px solid #eee;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+/* --- LOGO --- */
+.navbar-brand {
+  font-size: 28px;
+  font-weight: bold;
+  color: #c10000 !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* --- NAV LINK (Đăng nhập, Quản lý,...) --- */
+.navbar .nav-link {
+  display: inline-block;
+  min-width: 90px;
+  text-align: center;
+  padding: 6px 12px;
+  margin-left: 8px;
   border-radius: 8px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  font-size: 16px;
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
   font-weight: 500;
+  color: #444;
+  transition: all 0.2s ease;
+}
+
+.navbar .nav-link:hover {
+  background-color: #c10000;
+  color: white;
+  border-color: #c10000;
+}
+
+/* --- Ô TÌM KIẾM --- */
+.navbar input[type="text"] {
+  border-radius: 20px;
+  padding: 6px 14px;
+  border: 1px solid #ccc;
+  min-width: 150px;
+  transition: all 0.3s ease;
+}
+
+.navbar input[type="text"]:focus {
+  border-color: #c10000;
+  box-shadow: 0 0 4px #c10000;
+  outline: none;
+}
+
+/* --- THỜI TIẾT (WEATHER BOX) --- */
+#weather {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #fff;
+  padding: 10px 16px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  font-size: 15px;
   color: #333;
   transition: all 0.3s ease;
   cursor: pointer;
-  transform: perspective(600px) rotateY(10deg);
-  z-index: 10;
-}
-
-#weather i {
-  font-size: 24px;
-  margin-right: 10px;
-  color: #c10000;
 }
 
 #weather:hover {
-  transform: perspective(600px) rotateY(0deg) scale(1.05);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
-  background-color: #f5f5f5;
+  transform: scale(1.05);
+  background-color: #fefefe;
 }
 
-#weather .weather-info {
-  display: flex;
-  flex-direction: column;
-}
-
-#weather .temperature {
+#weather i {
   font-size: 20px;
-  font-weight: 700;
   color: #c10000;
 }
 
-#weather .description {
-  font-size: 14px;
-  color: #888;
-}
-
+/* Mobile responsive */
 @media (max-width: 767px) {
   #weather {
     flex-direction: column;
     text-align: center;
+    padding: 12px;
   }
 
-  #weather .temperature {
-    font-size: 18px;
+  .navbar .container {
+    flex-direction: column;
+    gap: 15px;
   }
 
-  #weather .description {
-    font-size: 12px;
+  .navbar input[type="text"] {
+    min-width: 100%;
+    margin-top: 10px;
   }
 }
 	</style>
@@ -182,47 +230,53 @@
 </head>
 <body>
 	<header>
-		<nav class="navbar navbar-expand-md navbar-light bg-white absolute-top">
-			<div class="container">
-				<button class="navbar-toggler order-2 order-md-1" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbar-left navbar-right" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse order-3 order-md-2" id="navbar-left">
-					<ul class="navbar-nav me-auto">
-					</ul>
-				</div>
-				<a class="navbar-brand mx-auto order-1 order-md-3" href="/">News</a>
-				<div class="collapse navbar-collapse order-4 order-md-4" id="navbar-right">
-					<ul class="navbar-nav ms-auto">
-						<li class="nav-item">
-							<a id="weather" class="nav-link" href="/weather" style="text-decoration: none;">Loading Weather...</a> <!-- Thêm phần thời tiết vào đây -->
-							<script src="/js/weather.js"></script>
-							<script>
-								fetchWeather();
-							</script>
-						</li>
-						<% if(typeof session === "undefined" || !session.MaNguoiDung) { %>
-							<li class="nav-item">
-								<a class="nav-link" href="/dangky">Đăng ký</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="/dangnhap">Đăng nhập</a>
-							</li>
-						<% } else { %>
-							<li class="nav-item">
-								<a class="nav-link" href="/admin">Quản lý</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="/dangxuat">Đăng xuất</a>
-							</li>
-						<% } %>
-					</ul>
-					<form class="form-inline" role="search" action="/timkiem" method="post">
-						<input name="tukhoa" class="search js-search form-control form-control-rounded me-sm-2" type="text" title="Bạn muốn tìm gì?" placeholder="Tìm kiếm..." aria-label="Search" />
-					</form>
-				</div>
-			</div>
-		</nav>
+	<header>
+  <nav class="navbar navbar-expand-md navbar-light bg-white">
+    <div class="container">
+
+      <!-- Logo -->
+      <a class="navbar-brand" href="/">News</a>
+
+      <!-- Toggle cho mobile -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+        aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Nội dung navbar -->
+      <div class="collapse navbar-collapse" id="navbarMain">
+        <ul class="navbar-nav ms-auto d-flex align-items-center gap-2">
+
+          <!-- Thời tiết -->
+          <li class="nav-item">
+            <a id="weather" class="nav-link px-3 py-2 rounded" href="/weather" style="text-decoration: none;">
+              <i class="fa fa-cloud-sun"></i> Loading...
+            </a>
+            <script src="/js/weather.js"></script>
+            <script>fetchWeather();</script>
+          </li>
+
+          <!-- Menu -->
+          <% if(typeof session === "undefined" || !session.MaNguoiDung) { %>
+            <li class="nav-item"><a class="nav-link" href="/dangky">Đăng ký</a></li>
+            <li class="nav-item"><a class="nav-link" href="/dangnhap">Đăng nhập</a></li>
+          <% } else { %>
+            <li class="nav-item"><a class="nav-link" href="/admin">Quản lý</a></li>
+            <li class="nav-item"><a class="nav-link" href="/dangxuat">Đăng xuất</a></li>
+          <% } %>
+
+          <!-- Tìm kiếm -->
+          <li class="nav-item">
+            <form class="d-flex" action="/timkiem" method="post">
+              <input name="tukhoa" class="form-control form-control-sm rounded-pill" type="text" placeholder="Tìm kiếm..." />
+            </form>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+  </nav>
 	</header>
 
 	<!-- New Horizontal Chuyên mục bar -->

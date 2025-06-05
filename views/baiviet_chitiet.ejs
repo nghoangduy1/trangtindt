@@ -142,66 +142,118 @@
 			font-size: 18px;
 			margin-right: 5px;
 		}
-			#weather {
+.navbar {
+  background-color: #fff;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.navbar .container {
   display: flex;
   align-items: center;
-  background-color: #fff;
-  padding: 10px 20px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 15px 30px;
+  background: linear-gradient(to right, #ffffff, #f9f9f9);
+  border: 1px solid #eee;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+/* --- LOGO --- */
+.navbar-brand {
+  font-size: 28px;
+  font-weight: bold;
+  color: #c10000 !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* --- NAV LINK (Đăng nhập, Quản lý,...) --- */
+.navbar .nav-link {
+  display: inline-block;
+  min-width: 90px;
+  text-align: center;
+  padding: 6px 12px;
+  margin-left: 8px;
   border-radius: 8px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  font-size: 16px;
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
   font-weight: 500;
+  color: #444;
+  transition: all 0.2s ease;
+}
+
+.navbar .nav-link:hover {
+  background-color: #c10000;
+  color: white;
+  border-color: #c10000;
+}
+
+/* --- Ô TÌM KIẾM --- */
+.navbar input[type="text"] {
+  border-radius: 20px;
+  padding: 6px 14px;
+  border: 1px solid #ccc;
+  min-width: 150px;
+  transition: all 0.3s ease;
+}
+
+.navbar input[type="text"]:focus {
+  border-color: #c10000;
+  box-shadow: 0 0 4px #c10000;
+  outline: none;
+}
+
+/* --- THỜI TIẾT (WEATHER BOX) --- */
+#weather {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #fff;
+  padding: 10px 16px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  font-size: 15px;
   color: #333;
   transition: all 0.3s ease;
   cursor: pointer;
-  transform: perspective(600px) rotateY(10deg);
-  z-index: 10;
-}
-
-#weather i {
-  font-size: 24px;
-  margin-right: 10px;
-  color: #c10000;
 }
 
 #weather:hover {
-  transform: perspective(600px) rotateY(0deg) scale(1.05);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
-  background-color: #f5f5f5;
+  transform: scale(1.05);
+  background-color: #fefefe;
 }
 
-#weather .weather-info {
-  display: flex;
-  flex-direction: column;
-}
-
-#weather .temperature {
+#weather i {
   font-size: 20px;
-  font-weight: 700;
   color: #c10000;
 }
 
-#weather .description {
-  font-size: 14px;
-  color: #888;
-}
-
+/* Mobile responsive */
 @media (max-width: 767px) {
   #weather {
     flex-direction: column;
     text-align: center;
+    padding: 12px;
   }
 
-  #weather .temperature {
-    font-size: 18px;
+  .navbar .container {
+    flex-direction: column;
+    gap: 15px;
   }
 
-  #weather .description {
-    font-size: 12px;
+  .navbar input[type="text"] {
+    min-width: 100%;
+    margin-top: 10px;
   }
 }
 	</style>
 	<link href="https://trangtin-7xcj.onrender.com/css/app.css" rel="stylesheet" />
+	<div id="fb-root"></div>
+<script async defer crossorigin="anonymous"
+  src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v19.0">
+</script>
 </head>
 
 <body>
@@ -285,54 +337,47 @@
 										<%= baiviet.TomTat %>
 									</strong></p>
 								<%- baiviet.NoiDung %>
-									
+
 									<hr />
-									<h3>2 bình luận</h3>
-									<div class="d-flex mb-3 p-3 bg-light">
-										<div class="text-center">
-											<img class="me-3 rounded-circle" src="https://trangtin-7xcj.onrender.com/images/avatars/1.png"
-												width="100" height="100" />
-											<h6 class="mt-1 mb-0 me-3">Kim</h6>
-										</div>
-										<div class="flex-grow-1">
-											<p class="mt-3 mb-2">Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl
-												sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede.
-												Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem thuộc justo pellentesque facilisis.
-											</p>
-											<time class="timeago text-muted" datetime="2021-09-20 20:00">20 november 2021</time>
-										</div>
-									</div>
-									<div class="d-flex mb-3 p-3 bg-light">
-										<div class="text-center">
-											<img class="me-3 rounded-circle" src="https://trangtin-7xcj.onrender.com/images/avatars/2.png"
-												width="100" height="100" />
-											<h6 class="mt-1 mb-0 me-3">Paula</h6>
-										</div>
-										<div class="flex-grow-1">
-											<p class="mt-3 mb-2">Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec,
-												imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a,
-												consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum
-												nunc. Nunc nonummy metus.</p>
-											<time class="timeago text-muted" datetime="2021-09-05 20:00">5 november 2021</time>
-										</div>
-									</div>
-									<div class="mt-5">
-										<h5>Write a response</h5>
-										<div class="row">
-											<div class="col-md-6">
-												<input type="text" class="form-control" id="name" name="name" placeholder="Your name">
+									<h3 class="mb-4">Bình luận</h3>
+
+									<% if (binhluans.length===0) { %>
+										<p>Chưa có bình luận nào. Hãy là người đầu tiên!</p>
+										<% } else { %>
+											<div class="mb-4">
+												<% binhluans.forEach(b => { %>
+											<div class="mb-3 p-3 border rounded bg-light">
+												<div class="d-flex justify-content-between align-items-center mb-1">
+													<strong><%= b.name %></strong>
+													<small class="text-muted"><%= b.createdAt.toLocaleString() %></small>
+												</div>
+												<p class="mb-0"><%= b.content %></p>
 											</div>
-											<div class="col-md-6">
-												<input type="email" class="form-control" id="email" name="email" placeholder="Your email">
+										<% }) %>
 											</div>
-										</div>
-										<textarea class="form-control mt-3" rows="3" placeholder="Write a response.."></textarea>
-										<a href="#" class="btn btn-success mt-3">Publish</a>
-									</div>
-							</div>
+											<% } %>
+
+												<h4 class="mt-5 mb-3">Gửi bình luận</h4>
+												<form action="/binhluan/<%= baiviet._id %>" method="POST" class="mb-5">
+													<div class="mb-3">
+														<input type="text" name="name" class="form-control" placeholder="Tên của bạn" required>
+													</div>
+													<div class="mb-3">
+														<textarea name="content" class="form-control" rows="4" placeholder="Nội dung bình luận"
+															required></textarea>
+													</div>
+													<button type="submit" class="btn btn-secondary">Gửi bình luận</button>
+												</form>
 						</article>
 						<% } %>
-				</div>
+				</div
+								<h3 class="mb-4 mt-5">Bình luận Facebook</h3>
+				<div class="fb-comments"
+						data-href="https://trangtin-7xcj.onrender.com/baiviet/chitiet/<%= baiviet._id %>"
+						data-width="100%"
+						data-numposts="5"
+						data-order-by="reverse_time">
+				</div>>
 				<div class="col-md-3 ms-auto">
 					<aside class="sidebar">
 						<div class="card mb-4">

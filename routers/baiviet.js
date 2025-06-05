@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var ChuDe = require('../models/chude');
 var BaiViet = require('../models/baiviet');
+var BinhLuan = require('../models/binhluan');
 
 // GET: Danh sách bài viết
 router.get('/', async (req, res) => {
@@ -101,6 +102,20 @@ router.get('/cuatoi', async (req, res) => {
 		});
 	} else {
 		res.redirect('/dangnhap');
+	}
+});
+// Bình luận
+router.get('/:id', async (req, res) => {
+	try {
+		const baiviet = await BaiViet.findById(req.params.id).populate('ChuDe');
+		const binhluans = await BinhLuan.find({ baiviet: req.params.id }).sort({ createdAt: -1 });
+
+		res.render('baiviet_chitiet', {
+			baiviet,
+			binhluans
+		});
+	} catch (err) {
+		res.status(500).send('Lỗi khi tải bài viết');
 	}
 });
 
