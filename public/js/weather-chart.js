@@ -1,5 +1,5 @@
 window.onload = async function () {
-  const res = await fetch('https://api.openweathermap.org/data/2.5/forecast?q=An Giang&units=metric&appid=a2eeb74f610d5ccb92bb68b05833a505');
+  const res = await fetch('https://api.openweathermap.org/data/2.5/forecast?q=An Giang&units=metric&appid=4aabef534d426073a54e9163fe76578d');
   const data = await res.json();
 
   if (!data.list) {

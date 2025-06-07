@@ -1,4 +1,4 @@
-function fetchWeather(city = 'An Giang', apiKey = 'a2eeb74f610d5ccb92bb68b05833a505') {
+function fetchWeather(city = 'An Giang', apiKey = '4aabef534d426073a54e9163fe76578d') {
 	const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
 	fetch(apiUrl)
